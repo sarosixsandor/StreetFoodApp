@@ -1,0 +1,23 @@
+{
+  "name": "streetfoodapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarosixsandor/StreetFoodApp.git"
+  },
+  "author": "Sárosi Sándor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sarosixsandor/StreetFoodApp/issues"
+  },
+  "homepage": "https://github.com/sarosixsandor/StreetFoodApp#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4"
+  }
+}
