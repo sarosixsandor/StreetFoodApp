@@ -1,2 +1,8 @@
 <h1>This is the street foods page!</h1>
 
+<% streetfoods.forEach(function(streetfood){ %>
+    <div>
+        <h4><%= streetfood.name %></h4>
+        <img src="<%= streetfood.picture %>">
+    </div>
+<% }) %>

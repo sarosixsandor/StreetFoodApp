@@ -15,7 +15,7 @@ app.get("/streetfoods", function(req, res){
         {name: "ZING", picture: "https://dhalbm0yebhbn.cloudfront.net/wp-content/uploads/2016/05/2_zing_gaszromobil.hu_.jpg"},
         {name: "PANEER", picture: "https://dhalbm0yebhbn.cloudfront.net/wp-content/uploads/2016/05/3_paneer_bebudapest.hu_.jpg"}
     ];
-    res.render("streetfoods");
+    res.render("streetfoods", {streetfoods: streetfoods});
 });
 
 app.listen(3000, function(){
