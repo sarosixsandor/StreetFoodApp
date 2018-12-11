@@ -1,3 +1,5 @@
+<% include partials/header %>
+
 <h1>This is the street foods page!</h1>
 
 <% streetfoods.forEach(function(streetfood){ %>
@@ -6,3 +8,5 @@
         <img src="<%= streetfood.picture %>">
     </div>
 <% }) %>
+
+<% include partials/footer %>
