@@ -1,14 +1,33 @@
 <% include partials/header %>
 
-<h1>This is the street foods page!</h1>
 
-<a href="/streetfoods/new">Add a new post to Steet foods!</a>
+<div class="container">
+    <!-- Jumbotron header -->
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Welcome to the Street Food App!</h1>
+            <p>View the best Street food places!</p>
+            <p>
+                <a class="btn btn-primary btn-md" href="/streetfoods/new">Add a new street food place!</a>
+            </p>
+        </div>
+    </header>
 
-<% streetfoods.forEach(function(streetfood){ %>
-    <div>
-        <h4><%= streetfood.name %></h4>
-        <img src="<%= streetfood.image %>">
+    <!-- Display each street food in a bootstrap cards -->
+    <div class="row">
+        <% streetfoods.forEach(function(streetfood){ %>
+            <div class="col-md-4 mb-2">
+                <div class="card">
+                    <img class="card-img-top" src="<%= streetfood.image %>" alt="">
+                    <div class="card-body">
+                        <h3 class="card-title"><%= streetfood.name %></h3>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
     </div>
-<% }) %>
+</div>
 
 <% include partials/footer %>

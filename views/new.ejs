@@ -1,0 +1,13 @@
+<% include partials/header %>
+
+<h1>Create a new (street food place) post!</h1>
+
+<form action="/streetfoods" method="POST">
+    <input type="text" name="name" placeholder="name">
+    <input type="text" name="image" placeholder="image url">
+    <button>Submit</button>
+</form>
+
+<a href="/streetfoods">Go back</a>
+
+<% include partials/footer %>
