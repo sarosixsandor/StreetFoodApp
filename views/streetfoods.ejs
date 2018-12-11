@@ -2,10 +2,12 @@
 
 <h1>This is the street foods page!</h1>
 
+<a href="/streetfoods/new">Add a new post to Steet foods!</a>
+
 <% streetfoods.forEach(function(streetfood){ %>
     <div>
         <h4><%= streetfood.name %></h4>
-        <img src="<%= streetfood.picture %>">
+        <img src="<%= streetfood.image %>">
     </div>
 <% }) %>
 
