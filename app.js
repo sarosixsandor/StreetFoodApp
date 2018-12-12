@@ -3,18 +3,19 @@ var app = express();
 var bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.set("view engine", "ejs")
+app.set("view engine", "ejs");
+
+// temporary array replaced to be global var so it can be reached
+// this is only here temporarily, these will be placed in mongodb
+var streetfoods = [
+    {name: "ZING", image: "https://dhalbm0yebhbn.cloudfront.net/wp-content/uploads/2016/05/2_zing_gaszromobil.hu_.jpg"},
+    {name: "PANEER", image: "https://dhalbm0yebhbn.cloudfront.net/wp-content/uploads/2016/05/3_paneer_bebudapest.hu_.jpg"}
+];
 
 // landing page route
 app.get("/", function(req, res){
     res.render("landing");
 });
-
-// temporary array replaced to be global var so it can be reached
-var streetfoods = [
-    {name: "ZING", image: "https://dhalbm0yebhbn.cloudfront.net/wp-content/uploads/2016/05/2_zing_gaszromobil.hu_.jpg"},
-    {name: "PANEER", image: "https://dhalbm0yebhbn.cloudfront.net/wp-content/uploads/2016/05/3_paneer_bebudapest.hu_.jpg"}
-];
 
 // street food places route
 app.get("/streetfoods", function(req, res){
