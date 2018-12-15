@@ -16,10 +16,11 @@ var streetfoodSchema = new mongoose.Schema({
 // compile into model
 var Streetfood = mongoose.model("Streetfood", streetfoodSchema);
 
-Streetfood.create(
+// commented out since we dont want multiple of the same street food places in the db when starting app.js
+/*Streetfood.create(
     {
-        name: "ZING",
-        image: "https://dhalbm0yebhbn.cloudfront.net/wp-content/uploads/2016/05/2_zing_gaszromobil.hu_.jpg"
+        name: "PANEER",
+        image: "https://dhalbm0yebhbn.cloudfront.net/wp-content/uploads/2016/05/3_paneer_bebudapest.hu_.jpg"
 
     }, function(err, streetfood){
         if(err){
@@ -29,14 +30,7 @@ Streetfood.create(
             console.log(streetfood);
         }
     }
-);
-
-// temporary array replaced to be global var so it can be reached
-// this is only here temporarily, these will be placed in mongodb
-var streetfoods = [
-    {name: "ZING", image: "https://dhalbm0yebhbn.cloudfront.net/wp-content/uploads/2016/05/2_zing_gaszromobil.hu_.jpg"},
-    {name: "PANEER", image: "https://dhalbm0yebhbn.cloudfront.net/wp-content/uploads/2016/05/3_paneer_bebudapest.hu_.jpg"}
-];
+);*/
 
 // landing page route
 app.get("/", function(req, res){
@@ -45,7 +39,14 @@ app.get("/", function(req, res){
 
 // street food places route
 app.get("/streetfoods", function(req, res){
-    res.render("streetfoods", {streetfoods: streetfoods});
+    // get streetfoods from db
+    Streetfood.find({}, function(err, allStreetfoods){
+        if(err) {
+            console.log(err);
+        } else {
+            res.render("streetfoods", {streetfoods: allStreetfoods});
+        }
+    });
 });
 
 // REST post route to street food places
