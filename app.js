@@ -7,7 +7,7 @@ mongoose.connect("mongodb://localhost/streetfood", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-// schema setup
+// schema setup (blueprint)
 var streetfoodSchema = new mongoose.Schema({
     name: String,
     image: String
@@ -15,22 +15,6 @@ var streetfoodSchema = new mongoose.Schema({
 
 // compile into model
 var Streetfood = mongoose.model("Streetfood", streetfoodSchema);
-
-// commented out since we dont want multiple of the same street food places in the db when starting app.js
-/*Streetfood.create(
-    {
-        name: "PANEER",
-        image: "https://dhalbm0yebhbn.cloudfront.net/wp-content/uploads/2016/05/3_paneer_bebudapest.hu_.jpg"
-
-    }, function(err, streetfood){
-        if(err){
-            console.log(err);
-        } else {
-            console.log("Newly created streetfood place");
-            console.log(streetfood);
-        }
-    }
-);*/
 
 // landing page route
 app.get("/", function(req, res){
@@ -41,7 +25,7 @@ app.get("/", function(req, res){
 app.get("/streetfoods", function(req, res){
     // get streetfoods from db
     Streetfood.find({}, function(err, allStreetfoods){
-        if(err) {
+        if(err){
             console.log(err);
         } else {
             res.render("streetfoods", {streetfoods: allStreetfoods});
@@ -55,11 +39,17 @@ app.post("/streetfoods", function(req, res){
     var name = req.body.name;
     var image = req.body.image;
     var newStreetfoodplace = {name: name, image: image};
-    streetfoods.push(newStreetfoodplace);
-    // redirect back to streetfoods page
-    // we have two "/streetfoods", but the default is a "GET" request
-    // so it redirects us to the right page
-    res.redirect("/streetfoods");
+    // create a new steetfood place and save to db
+    Streetfood.create(newStreetfoodplace, function(err, newlyCreated){
+        if(err){
+            console.log(err);
+        } else {
+            // redirect back to streetfoods page
+            // we have two "/streetfoods", but the default is a "GET" request
+            // so it redirects us to the right page
+            res.redirect("/streetfoods");
+        }
+    });
 });
 
 app.get("/streetfoods/new", function(req, res){
