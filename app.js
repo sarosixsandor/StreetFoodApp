@@ -2,20 +2,11 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
+var Streetfood = require("./models/streetfood");
 
 mongoose.connect("mongodb://localhost/streetfood", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
-
-// schema setup (blueprint)
-var streetfoodSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-
-// compile into model
-var Streetfood = mongoose.model("Streetfood", streetfoodSchema);
 
 /*Streetfood.create(
     {
