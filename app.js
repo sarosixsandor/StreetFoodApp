@@ -3,7 +3,9 @@ var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var Streetfood = require("./models/streetfood");
+var seedDB = require("./seeds");
 
+seedDB();
 mongoose.connect("mongodb://localhost/streetfood", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
