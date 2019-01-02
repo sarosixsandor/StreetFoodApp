@@ -22,7 +22,7 @@ var data = [
 
 function seedDB(){
     // remove all street food places
-    Streetfood.remove({}, function(err){
+    Streetfood.deleteMany({}, function(err){
         if(err){
             console.log(err);
         }

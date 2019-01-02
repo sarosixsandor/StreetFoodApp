@@ -5,26 +5,13 @@ var mongoose = require("mongoose");
 var Streetfood = require("./models/streetfood");
 var seedDB = require("./seeds");
 
-seedDB();
+//seedDB(); 
+// its commented out for the sole reason that I wont be stupid enough to start appjs again
+// and flood my own db with the same comments with different IDs making show.ejs now work properly
+
 mongoose.connect("mongodb://localhost/streetfood", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
-
-/*Streetfood.create(
-    {
-        name: "ZING",
-        image: "https://dhalbm0yebhbn.cloudfront.net/wp-content/uploads/2016/05/2_zing_gaszromobil.hu_.jpg",
-        description: "Delicious burgers made with prime cuts of beef and served up with high quality ingredients."
-    },
-    function(err, streetfood){
-        if(err){
-            console.log(err);
-        } else {
-            console.log("created new streetfood place");
-            console.log(streetfood);
-        }
-    }
-)*/
 
 // landing page route
 app.get("/", function(req, res){
@@ -70,12 +57,11 @@ app.get("/streetfoods/new", function(req, res){
 
 // SHOW - more info about one specific(id) street food place
 app.get("/streetfoods/:id", function(req, res){
-    var id = req.params.id;
-    Streetfood.findById(id, function(err, foundStreetfood){
+    Streetfood.findById(req.params.id).populate("comments").exec(function(err, foundStreetfood){
         if(err){
             console.log(err);
         } else {
-            res.render("show", {streetfood: foundStreetfood})
+            res.render("show", {streetfood: foundStreetfood});
         }
     });
 });
