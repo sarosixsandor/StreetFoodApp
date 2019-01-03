@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var Streetfood = require("./models/streetfood");
+var Comment = require("./models/comment");
 var seedDB = require("./seeds");
 
 //seedDB(); 
@@ -25,7 +26,7 @@ app.get("/streetfoods", function(req, res){
         if(err){
             console.log(err);
         } else {
-            res.render("index", {streetfoods: allStreetfoods});
+            res.render("streetfoods/index", {streetfoods: allStreetfoods});
         }
     });
 });
@@ -52,7 +53,7 @@ app.post("/streetfoods", function(req, res){
 
 // NEW - display form to create new street food place
 app.get("/streetfoods/new", function(req, res){
-    res.render("new");
+    res.render("streetfoods/new");
 });
 
 // SHOW - more info about one specific(id) street food place
@@ -61,7 +62,38 @@ app.get("/streetfoods/:id", function(req, res){
         if(err){
             console.log(err);
         } else {
-            res.render("show", {streetfood: foundStreetfood});
+            res.render("streetfoods/show", {streetfood: foundStreetfood});
+        }
+    });
+});
+
+// COMMENT ROUTES
+app.get("/streetfoods/:id/comments/new", function(req, res){
+    Streetfood.findById(req.params.id, function(err, streetfood){
+        if(err){
+            console.log(err);
+            res.redirect
+        } else {
+            res.render("comments/new", {streetfood: streetfood});
+        }
+    })
+});
+
+app.post("/streetfoods/:id/comments", function(req, res){
+    Streetfood.findById(req.params.id, function(err, streetfood){
+        if(err){
+            console.log(err);
+            res.redirect("/streetfoods");
+        } else {
+            Comment.create(req.body.comment, function(err, comment){
+                if(err){
+                    console.log(err);
+                } else {
+                    streetfood.comments.push(comment);
+                    streetfood.save();
+                    res.redirect("/streetfoods/" + streetfood._id);
+                }
+            });
         }
     });
 });
