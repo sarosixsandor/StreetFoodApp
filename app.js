@@ -15,6 +15,18 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
+// Passport Configuration
+app.use(require("express-session")({
+    secret: "secretsecretsecret",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // landing page route
 app.get("/", function(req, res){
     res.render("landing");
@@ -96,6 +108,29 @@ app.post("/streetfoods/:id/comments", function(req, res){
                 }
             });
         }
+    });
+});
+
+// ===========
+// Auth routes
+// ===========
+
+// Show register form
+app.get("/register", function(req, res){
+    res.render("register");
+});
+
+// Handle sign up logic
+app.post("/register", function(req, res){
+    var newUser = new User({username: req.body.username});
+    User.register(newUser, req.body.password, function(err, user){
+        if(err){
+            console.log(err)
+            return res.render("register");
+        }
+        passport.authenticate("local")(req, res, function(){
+            res.redirect("/streetfoods");
+        });
     });
 });
 
