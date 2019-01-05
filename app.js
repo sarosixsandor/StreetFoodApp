@@ -5,11 +5,11 @@ var mongoose = require("mongoose");
 var Streetfood = require("./models/streetfood");
 var Comment = require("./models/comment");
 var seedDB = require("./seeds");
+var passport = require("passport");
+var LocalStrategy = require("passport-local");
+var User = require("./models/user");
 
-//seedDB(); 
-// its commented out for the sole reason that I wont be stupid enough to start appjs again
-// and flood my own db with the same comments with different IDs making show.ejs now work properly
-
+//seedDB();
 mongoose.connect("mongodb://localhost/streetfood", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
