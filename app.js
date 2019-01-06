@@ -81,7 +81,7 @@ app.get("/streetfoods/:id", function(req, res){
 });
 
 // COMMENT ROUTES
-app.get("/streetfoods/:id/comments/new", function(req, res){
+app.get("/streetfoods/:id/comments/new", isLoggedIn, function(req, res){
     Streetfood.findById(req.params.id, function(err, streetfood){
         if(err){
             console.log(err);
@@ -92,7 +92,7 @@ app.get("/streetfoods/:id/comments/new", function(req, res){
     })
 });
 
-app.post("/streetfoods/:id/comments", function(req, res){
+app.post("/streetfoods/:id/comments", isLoggedIn, function(req, res){
     Streetfood.findById(req.params.id, function(err, streetfood){
         if(err){
             console.log(err);
@@ -145,8 +145,20 @@ app.post("/login", passport.authenticate("local",
         successRedirect: "/streetfoods",
         failureRedirect: "/login"
     }), function(req, res){
-    
 });
+
+// Logout route
+app.get("/logout", function(req, res){
+    req.logout();
+    res.redirect("/streetfoods");
+});
+
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+};
 
 app.listen(3000, function(){
     console.log("The Street Food App server is now listening on port: 3000");
