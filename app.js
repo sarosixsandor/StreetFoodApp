@@ -27,6 +27,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// pass current user to all routes
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
+});
+
 // landing page route
 app.get("/", function(req, res){
     res.render("landing");
@@ -39,7 +45,7 @@ app.get("/streetfoods", function(req, res){
         if(err){
             console.log(err);
         } else {
-            res.render("streetfoods/index", {streetfoods: allStreetfoods});
+            res.render("streetfoods/index", {streetfoods: allStreetfoods, currentUser: req.user});
         }
     });
 });
