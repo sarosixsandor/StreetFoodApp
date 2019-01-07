@@ -3,7 +3,7 @@ var router = express.Router();
 var Streetfood = require("../models/streetfood");
 
 // INDEX - show all street food places
-router.get("/streetfoods", function(req, res){
+router.get("/", function(req, res){
     // get streetfoods from db
     Streetfood.find({}, function(err, allStreetfoods){
         if(err){
@@ -15,7 +15,7 @@ router.get("/streetfoods", function(req, res){
 });
 
 // CREATE - add new street food place to DB
-router.post("/streetfoods", function(req, res){
+router.post("/", function(req, res){
     // get data from form and add to streetfoods[]
     var name = req.body.name;
     var image = req.body.image;
@@ -35,12 +35,12 @@ router.post("/streetfoods", function(req, res){
 });
 
 // NEW - display form to create new street food place
-router.get("/streetfoods/new", function(req, res){
+router.get("/new", function(req, res){
     res.render("streetfoods/new");
 });
 
 // SHOW - more info about one specific(id) street food place
-router.get("/streetfoods/:id", function(req, res){
+router.get("/:id", function(req, res){
     Streetfood.findById(req.params.id).populate("comments").exec(function(err, foundStreetfood){
         if(err){
             console.log(err);

@@ -1,10 +1,10 @@
 var express = require("express");
-var router = express.Router();
+var router = express.Router({mergeParams: true});
 var Streetfood = require("../models/streetfood");
 var Comment = require("../models/comment");
 
-// COMMENT ROUTES
-router.get("/streetfoods/:id/comments/new", isLoggedIn, function(req, res){
+// Comments - New
+router.get("/new", isLoggedIn, function(req, res){
     Streetfood.findById(req.params.id, function(err, streetfood){
         if(err){
             console.log(err);
@@ -15,7 +15,8 @@ router.get("/streetfoods/:id/comments/new", isLoggedIn, function(req, res){
     })
 });
 
-router.post("/streetfoods/:id/comments", isLoggedIn, function(req, res){
+// Comments - Create
+router.post("/", isLoggedIn, function(req, res){
     Streetfood.findById(req.params.id, function(err, streetfood){
         if(err){
             console.log(err);
@@ -34,6 +35,7 @@ router.post("/streetfoods/:id/comments", isLoggedIn, function(req, res){
     });
 });
 
+// Middleware
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next();

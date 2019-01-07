@@ -9,6 +9,7 @@ var Comment = require("./models/comment");
 var seedDB = require("./seeds");
 var User = require("./models/user");
 
+// Requiring routes
 var commentRoutes = require("./routes/comments");
 var streetfoodRoutes = require("./routes/streetfoods");
 var indexRoutes = require("./routes/index");
@@ -37,9 +38,9 @@ app.use(function(req, res, next){
     next();
 });
 
-app.use(commentRoutes);
-app.use(streetfoodRoutes);
-app.use(indexRoutes);
+app.use("/", indexRoutes);
+app.use("/streetfoods", streetfoodRoutes);
+app.use("/streetfoods/:id/comments", commentRoutes);
 
 app.listen(3000, function(){
     console.log("The Street Food App server is now listening on port: 3000");
