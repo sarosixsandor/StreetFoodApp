@@ -14,7 +14,7 @@ var commentRoutes = require("./routes/comments");
 var streetfoodRoutes = require("./routes/streetfoods");
 var indexRoutes = require("./routes/index");
 
-//seedDB();
+// seedDB(); // seed the DB with posts and comments
 mongoose.connect("mongodb://localhost/streetfood", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
