@@ -15,12 +15,16 @@ router.get("/", function(req, res){
 });
 
 // CREATE - add new street food place to DB
-router.post("/", function(req, res){
+router.post("/", isLoggedIn, function(req, res){
     // get data from form and add to streetfoods[]
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.description;
-    var newStreetfoodplace = {name: name, image: image, description: desc};
+    var author = {
+        id: req.user._id,
+        username: req.user.username
+    }
+    var newStreetfoodplace = {name: name, image: image, description: desc, author: author};
     // create a new steetfood place and save to db
     Streetfood.create(newStreetfoodplace, function(err, newlyCreated){
         if(err){
@@ -35,7 +39,7 @@ router.post("/", function(req, res){
 });
 
 // NEW - display form to create new street food place
-router.get("/new", function(req, res){
+router.get("/new", isLoggedIn, function(req, res){
     res.render("streetfoods/new");
 });
 
@@ -49,5 +53,13 @@ router.get("/:id", function(req, res){
         }
     });
 });
+
+// Middleware
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+};
 
 module.exports = router;
