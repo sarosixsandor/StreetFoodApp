@@ -76,6 +76,17 @@ router.put("/:id", function(req, res){
     });
 });
 
+// Destroy Street food post route
+router.delete("/:id", function(req, res){
+    Streetfood.findByIdAndRemove(req.params.id, function(err){
+        if(err){
+            res.redirect("/streetfoods");
+        } else {
+            res.redirect("/streetfoods");
+        }
+    });
+});
+
 // Middleware
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
