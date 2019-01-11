@@ -54,6 +54,28 @@ router.get("/:id", function(req, res){
     });
 });
 
+// Edit Street food post route
+router.get("/:id/edit", function(req, res){
+    Streetfood.findById(req.params.id, function(err, foundStreetfood){
+        if(err){
+            res.redirect("/streetfoods");
+        } else {
+            res.render("streetfoods/edit", {streetfood: foundStreetfood});
+        }
+    });
+});
+
+// Update Street food post route
+router.put("/:id", function(req, res){
+    Streetfood.findByIdAndUpdate(req.params.id, req.body.streetfood, function(err, updatedStreetfood){
+        if(err){
+            res.redirect("/streetfoods");
+        } else {
+            res.redirect("/streetfoods/" + req.params.id);
+        }
+    });
+});
+
 // Middleware
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){

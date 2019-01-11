@@ -4,6 +4,7 @@ var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
+var methodOverride = require("method-override");
 var Streetfood = require("./models/streetfood");
 var Comment = require("./models/comment");
 var seedDB = require("./seeds");
@@ -16,9 +17,12 @@ var indexRoutes = require("./routes/index");
 
 // seedDB(); // seed the DB with posts and comments
 mongoose.connect("mongodb://localhost/streetfood", { useNewUrlParser: true });
+mongoose.set("useFindAndModify", false);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
+
 
 // Passport Configuration
 app.use(require("express-session")({
