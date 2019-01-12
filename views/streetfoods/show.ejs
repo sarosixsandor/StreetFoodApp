@@ -17,10 +17,12 @@
                     <h4><a href=""><%= streetfood.name %></a></h4>
                     <p><%= streetfood.description %></p>
                     <em><p>Submitted by: <%= streetfood.author.username %></p></em>
-                    <a class="btn btn-warning btn-sm" href="/streetfoods/<%= streetfood._id %>/edit">Edit</a>
-                    <form id="delete-form" action="/streetfoods/<%= streetfood._id %>?_method=DELETE" method="POST">
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                    </form>
+                    <% if(currentUser && streetfood.author.id.equals(currentUser._id)){ %>
+                        <a class="btn btn-warning btn-sm" href="/streetfoods/<%= streetfood._id %>/edit">Edit</a>
+                        <form id="delete-form" action="/streetfoods/<%= streetfood._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    <% } %>
                 </div>
             </div>
             <div class="card bg-light">
