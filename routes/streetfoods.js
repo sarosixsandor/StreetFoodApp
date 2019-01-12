@@ -55,18 +55,14 @@ router.get("/:id", function(req, res){
 });
 
 // Edit Street food post route
-router.get("/:id/edit", function(req, res){
+router.get("/:id/edit", checkStreetfoodOwnership, function(req, res){
     Streetfood.findById(req.params.id, function(err, foundStreetfood){
-        if(err){
-            res.redirect("/streetfoods");
-        } else {
-            res.render("streetfoods/edit", {streetfood: foundStreetfood});
-        }
+        res.render("streetfoods/edit", {streetfood: foundStreetfood});
     });
 });
 
 // Update Street food post route
-router.put("/:id", function(req, res){
+router.put("/:id", checkStreetfoodOwnership, function(req, res){
     Streetfood.findByIdAndUpdate(req.params.id, req.body.streetfood, function(err, updatedStreetfood){
         if(err){
             res.redirect("/streetfoods");
@@ -77,7 +73,7 @@ router.put("/:id", function(req, res){
 });
 
 // Destroy Street food post route
-router.delete("/:id", function(req, res){
+router.delete("/:id", checkStreetfoodOwnership, function(req, res){
     Streetfood.findByIdAndRemove(req.params.id, function(err){
         if(err){
             res.redirect("/streetfoods");
@@ -94,5 +90,24 @@ function isLoggedIn(req, res, next){
     }
     res.redirect("/login");
 };
+
+function checkStreetfoodOwnership(req, res, next){
+    if (req.isAuthenticated()){
+        Streetfood.findById(req.params.id, function(err, foundStreetfood){
+            if(err){
+                res.redirect("back");
+            } else {
+                // does user own the street food post ?
+                if (foundStreetfood.author.id.equals(req.user._id)){
+                    next();
+                } else {
+                    res.redirect("back");
+                }
+            }
+        });
+    } else {
+        res.redirect("back");
+    }
+}
 
 module.exports = router;
