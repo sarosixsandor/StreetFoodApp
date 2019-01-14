@@ -40,6 +40,17 @@ router.post("/", isLoggedIn, function(req, res){
     });
 });
 
+// Comments - Edit
+router.get("/:comment_id/edit", function(req, res){
+    Comment.findById(req.params.comment_id, function(err, foundComment){
+        if(err){
+            res.redirect("back");
+        } else {
+            res.render("comments/edit", {streetfood_id: req.params.id, comment: foundComment});
+        }
+    });
+});
+
 // Middleware
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
