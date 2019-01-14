@@ -97,7 +97,7 @@ function checkStreetfoodOwnership(req, res, next){
             if(err){
                 res.redirect("back");
             } else {
-                // does user own the street food post ?
+                // does user own the street food post?
                 if (foundStreetfood.author.id.equals(req.user._id)){
                     next();
                 } else {
