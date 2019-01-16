@@ -9,7 +9,6 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
     Streetfood.findById(req.params.id, function(err, streetfood){
         if(err){
             console.log(err);
-            res.redirect
         } else {
             res.render("comments/new", {streetfood: streetfood});
         }
@@ -25,6 +24,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
         } else {
             Comment.create(req.body.comment, function(err, comment){
                 if(err){
+                    req.flash("error", "Something went wrong!");
                     console.log(err);
                 } else {
                     // add username and id to comments
@@ -34,6 +34,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
                     comment.save();
                     streetfood.comments.push(comment);
                     streetfood.save();
+                    req.flash("success", "Comment successfully added!");
                     res.redirect("/streetfoods/" + streetfood._id);
                 }
             });
@@ -69,6 +70,7 @@ router.delete("/:comment_id", middleware.checkCommentOwnership, function(req, re
         if(err){
             res.redirect("back");
         } else {
+            req.flash("success", "Comment deleted!");
             res.redirect("/streetfoods/" + req.params.id);
         }
     });

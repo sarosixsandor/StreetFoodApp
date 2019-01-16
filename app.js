@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 var mongoose = require("mongoose");
+var flash = require("connect-flash");
 var bodyParser = require("body-parser");
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
@@ -21,6 +22,7 @@ mongoose.set("useFindAndModify", false);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
+app.use(flash());
 app.set("view engine", "ejs");
 
 
@@ -39,6 +41,8 @@ passport.deserializeUser(User.deserializeUser());
 // Pass current user to all routes
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 
