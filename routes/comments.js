@@ -34,7 +34,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
                     comment.save();
                     streetfood.comments.push(comment);
                     streetfood.save();
-                    req.flash("success", "Comment successfully added!");
+                    req.flash("success", "Successfully added comment!");
                     res.redirect("/streetfoods/" + streetfood._id);
                 }
             });
@@ -44,12 +44,18 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 
 // Comments - Edit
 router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
-    Comment.findById(req.params.comment_id, function(err, foundComment){
-        if(err){
+    Streetfood.findById(req.params.id, function(err, foundStreetfood){
+        if (err || !foundStreetfood){
+            req.flash("error", "Street Food not found!");
             res.redirect("back");
-        } else {
-            res.render("comments/edit", {streetfood_id: req.params.id, comment: foundComment});
         }
+        Comment.findById(req.params.comment_id, function(err, foundComment){
+            if(err){
+                res.redirect("back");
+            } else {
+                res.render("comments/edit", {streetfood_id: req.params.id, comment: foundComment});
+            }
+        });
     });
 });
 

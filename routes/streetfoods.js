@@ -47,8 +47,9 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 // SHOW - more info about one specific(id) street food place
 router.get("/:id", function(req, res){
     Streetfood.findById(req.params.id).populate("comments").exec(function(err, foundStreetfood){
-        if(err){
-            console.log(err);
+        if(err || !foundStreetfood){
+            req.flash("error", "Street Food not found!");
+            res.redirect("back");
         } else {
             res.render("streetfoods/show", {streetfood: foundStreetfood});
         }
