@@ -10,6 +10,7 @@ var Streetfood = require("./models/streetfood");
 var Comment = require("./models/comment");
 var seedDB = require("./seeds");
 var User = require("./models/user");
+require("dotenv").config();
 
 // Requiring routes
 var commentRoutes = require("./routes/comments");
@@ -17,7 +18,15 @@ var streetfoodRoutes = require("./routes/streetfoods");
 var indexRoutes = require("./routes/index");
 
 // seedDB(); // seed the DB with posts and comments
-mongoose.connect("mongodb://localhost/streetfood", { useNewUrlParser: true });
+//mongoose.connect("mongodb://localhost/streetfood", { useNewUrlParser: true });
+mongoose.connect(process.env.API_KEY, { 
+    useNewUrlParser: true,
+    useCreateIndex: true
+}).then(() => {
+    console.log("Connected to DB!");
+}).catch((error) => {
+    console.log("ERROR: " + error.message);
+});
 mongoose.set("useFindAndModify", false);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
@@ -28,7 +37,7 @@ app.set("view engine", "ejs");
 
 // Passport Configuration
 app.use(require("express-session")({
-    secret: "secretsecretsecret",
+    secret: "secretString",
     resave: false,
     saveUninitialized: false
 }));
