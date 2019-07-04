@@ -9,3 +9,7 @@
 .delete-form {
     display: inline;
 }
+
+.alert p {
+    margin-top: 1em;
+}
