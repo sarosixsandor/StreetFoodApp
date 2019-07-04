@@ -1,16 +1,23 @@
 body {
     background-color: #000;
+    color: transparent;
 }
 
 #landing-header {
+    color: white;
     z-index: 1;
     position: relative;
     text-align: center;
     padding-top: 40vh;
 }
 
-#landing-header h1 {
-    color: #fff;
+.asd {
+    border-radius: 8px;
+    margin: auto;
+    padding-top: 5px;
+    padding-bottom: 26px;
+    width: 40%;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 .slideshow { 
@@ -40,26 +47,26 @@ body {
 }
 
 .slideshow li:nth-child(1) { 
-    background-image: url(picture1link) 
+    background-image: url('https://dailynewshungary.com/wp-content/uploads/2017/03/food-salad-restaurant-person.jpg');
 }
 
 .slideshow li:nth-child(2) { 
-    background-image: url(picture2link);
+    background-image: url('https://funzine.hu/wp-content/uploads/2018/04/MG_2507-e1522757177961.jpg');
     animation-delay: 10s; 
 }
 
 .slideshow li:nth-child(3) { 
-    background-image: url(picture3link);
+    background-image: url('https://images.happycow.net/venues/1024/92/39/hcmp92391_451818.jpeg');
     animation-delay: 20s; 
 }
 
 .slideshow li:nth-child(4) { 
-    background-image: url(picture4link);  
+    background-image: url('https://dhalbm0yebhbn.cloudfront.net/wp-content/uploads/2017/03/k%C3%BCrt%C3%B6skal%C3%A1cs_cukrom.hu_.jpg');  
     animation-delay: 30s; 
 }
 
 .slideshow li:nth-child(5) { 
-    background-image: url(picture5link);
+    background-image: url('https://i.pinimg.com/originals/ae/8c/73/ae8c738272f9d95556640b35765cfa12.jpg');
     animation-delay: 40s; 
 }
 
